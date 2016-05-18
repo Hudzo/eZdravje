@@ -31,7 +31,7 @@ function getSessionId() {
  * @return ehrId generiranega pacienta
  */
 function generirajPodatke(stPacienta) {
-  ehrId = "";
+  var ehrId = "";
 
   // TODO: Potrebno implementirati
 
