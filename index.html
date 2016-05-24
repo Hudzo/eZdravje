@@ -29,7 +29,7 @@
         <ul class="nav navbar-nav">
           <li><a href="opis.html">Opis ideje</a></li>
           <li><a href="nacrt.html">Načrt informacijske rešitve</a></li>
-          <li><a href="#">Generiranje podatkov</a></li>
+          <li><a href="#" onclick="generirajPodatke(1);generirajPodatke(2);generirajPodatke(3);">Generiranje podatkov</a></li>
         </ul>
       </div>
     </div>
@@ -66,7 +66,7 @@
 					</div>
 					<div class="panel-body">
 						<span class="label label-default">EHR ID</span><input id="preberiEHRid" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
-						<button type="button" class="btn btn-primary btn-xs" onclick="preberiEHRodBolnika()" style="margin-top:10px">Vnos</button><span id="preberiSporocilo"></span>
+						<button type="button" class="btn btn-primary btn-xs" onclick="preberiEHRodBolnika()" style="margin-top:10px">Pridobi Podatke</button><span id="preberiSporocilo"></span>
 				  	</div>
 				</div>
 			</div>
@@ -96,7 +96,7 @@
 					<div class="panel-heading" style="background-color:#2c2c2c">
 						<div class="row" style="color:#959595">
 							<div class="col-lg-8 col-md-8 col-sm-8"><b>Pregled</b></div>
-							<div class="col-lg-4 col-md-4 col-sm-4"><select class="form-control input-sm" id="preberiEhrIdZaVitalneZnake"><option value=""></option><option value="b931580f-2b05-488b-985b-8d9ffb08ad02">Ata Smrk</option><option value="d564c6a3-5a43-4fcc-bfa7-9ac76e9673bd">Pujsa Pepa</option></select></div>
+							<div class="col-lg-4 col-md-4 col-sm-4"><select class="form-control input-sm" id="preberiEhrIdZaVitalneZnake"><option value=""></option></select></div>
 						</div>
 					</div>
 					<div class="panel-body">
