@@ -115,13 +115,17 @@ function preberiEHRodBolnika() {
  * telesna višina, telesna teža, sistolični in diastolični krvni tlak,
  * nasičenost krvi s kisikom in merilec).
  */
-function dodajMeritveVitalnihZnakov() {
-	var sessionId = getSessionId();
-
+function vpisiMeritve(){
 	var ehrId = $("#dodajVitalnoEHR").val();
 	var datumInUra = $("#dodajVitalnoDatumInUra").val();
 	var telesnaVisina = $("#dodajVitalnoTelesnaVisina").val();
 	var telesnaTeza = $("#dodajVitalnoTelesnaTeza").val();
+	dodajMeritveVitalnihZnakov(ehrId,datumInUra,telesnaVisina,telesnaTeza);
+}
+ 
+ 
+function dodajMeritveVitalnihZnakov(ehrId,datumInUra,telesnaVisina,telesnaTeza) {
+	var sessionId = getSessionId();
 
 	if (!ehrId || ehrId.trim().length == 0) {
 		$("#dodajMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo " +
@@ -173,6 +177,14 @@ function dodajMeritveVitalnihZnakov() {
  * @param stPacienta zaporedna številka pacienta (1, 2 ali 3)
  * @return ehrId generiranega pacienta
  */
+ 
+function generateStuff(){
+	alert("Generiram podatke, prosim pocakajte nekaj sekund...");
+	generirajPodatke(1);
+	generirajPodatke(2);
+	generirajPodatke(3);
+}
+ 
  var flag1=0;
  var flag2=0;
  var flag3=0;
@@ -182,11 +194,19 @@ function generirajPodatke(stPacienta) {
     var sessionId = getSessionId();
 	var ime="";
 	var priimek="";
-	var tabTeza=[];
-	var tabVisina=[];
-	var tabCas=[];
 	var rojstniDan;
+	var ehrId;
 	
+	var x = document.getElementById("preberiEhrIdZaVitalneZnake");
+    var y = document.getElementById("preberiObstojeciVitalniZnak");
+    var z = document.getElementById("preberiObstojeciEHR");
+    var q = document.getElementById("preberiPredlogoBolnika");
+    var option = document.createElement("option");
+    var option1 = document.createElement("option");
+    var option2 = document.createElement("option");
+    var option3 = document.createElement("option");
+	
+
     switch(stPacienta){
         
         case 1:
@@ -196,13 +216,21 @@ function generirajPodatke(stPacienta) {
         	else{
         		flag1=1;
         	}
-        	//normal, boring child who will pobably...
-        	tabTeza=[60, 62, 63, 65, 70, 71, 72, 72.4, 72.5];
-        	tabVisina =[160, 160, 161, 162, 170, 173, 177, 179, 180];
-        	tabCas = ["2015-01-03T9:00","2015-02-03T9:00","2015-03-03T9:00","2015-04-03T9:00","2015-05-03T9:00","2015-06-03T9:00","2015-07-03T9:00","2015-08-03T9:00","2015-09-03T9:00"];
+        	//normal, boring child who will pobably be boring all his life, I guess
             ime = "Janezek";
             priimek = "Mali";
-            rojstniDan="2000-01-03T9:00";
+            rojstniDan="1980-01-03T9:00";
+        	ehrId = createEHR(ime,priimek,rojstniDan);
+        	
+        	dodajMeritveVitalnihZnakov(ehrId,"1990-02-14T9:00",160,60);
+        	dodajMeritveVitalnihZnakov(ehrId,"1990-03-14T9:00",160,62);
+        	dodajMeritveVitalnihZnakov(ehrId,"1990-04-14T9:00",161,63);
+        	dodajMeritveVitalnihZnakov(ehrId,"1990-05-14T9:00",162,65);
+        	dodajMeritveVitalnihZnakov(ehrId,"1990-06-14T9:00",170,70);
+        	dodajMeritveVitalnihZnakov(ehrId,"1990-07-14T9:00",173,71);
+        	dodajMeritveVitalnihZnakov(ehrId,"1990-08-14T9:00",177,72);
+        	dodajMeritveVitalnihZnakov(ehrId,"1990-09-14T9:00",179,72.4);
+        	dodajMeritveVitalnihZnakov(ehrId,"1990-10-14T9:00",180,72.5);
 			
         break;
         
@@ -214,12 +242,20 @@ function generirajPodatke(stPacienta) {
         		flag2=1;
         	}
             //bajs
-            tabVisina = [150, 151, 151, 151, 151, 151, 151, 151, 151];
-            tabTeza=[110,112,109,105,113,125,109,108,105];
-            tabCas=["2000-01-01T17:00","2001-01-01T17:00","2002-01-01T17:00","2003-01-01T17:00","2004-01-01T17:00","2005-01-01T17:00","2006-01-01T17:00","2007-01-01T17:00","2008-01-01T17:00"];
             ime = "Jože";
             priimek = "Gorišek";
             rojstniDan="1960-01-03T9:00";
+			ehrId = createEHR(ime,priimek,rojstniDan);
+			
+			dodajMeritveVitalnihZnakov(ehrId,"2000-02-14T9:00",150,110);
+			dodajMeritveVitalnihZnakov(ehrId,"2001-02-14T9:00",151,112);
+			dodajMeritveVitalnihZnakov(ehrId,"2002-02-14T9:00",151,109);
+			dodajMeritveVitalnihZnakov(ehrId,"2003-02-14T9:00",151,105);
+			dodajMeritveVitalnihZnakov(ehrId,"2004-02-14T9:00",151,113);
+			dodajMeritveVitalnihZnakov(ehrId,"2005-02-14T9:00",151,125);
+			dodajMeritveVitalnihZnakov(ehrId,"2007-02-14T9:00",151,109);
+			dodajMeritveVitalnihZnakov(ehrId,"2008-02-14T9:00",151,108);
+			dodajMeritveVitalnihZnakov(ehrId,"2009-02-14T9:00",151,105);
 			
         break;
         
@@ -231,12 +267,20 @@ function generirajPodatke(stPacienta) {
         		flag3=1;
         	}
         	//presuh model
-        	tabVisina = [172, 172, 172, 173, 173, 173, 174, 174, 175];
-        	tabTeza = [45,46,44,45.5,42,43,46,48,50];
-        	tabCas = ["1990-02-14T9:00","1990-02-14T10:00","1990-02-14T11:00","1990-02-14T12:00","1990-02-14T13:00","1990-02-14T14:00","1990-02-14T15:00","1990-02-14T16:00","1990-02-14T17:00"];
             ime = "Valentina";
             priimek = "Ljuben";
             rojstniDan="1987-01-03T9:00";
+            ehrId = createEHR(ime,priimek,rojstniDan);
+            
+            dodajMeritveVitalnihZnakov(ehrId,"1990-02-14T9:00",172,45);
+            dodajMeritveVitalnihZnakov(ehrId,"1990-02-14T10:00",172,46);
+            dodajMeritveVitalnihZnakov(ehrId,"1990-02-14T11:00",172,44);
+            dodajMeritveVitalnihZnakov(ehrId,"1990-02-14T12:00",173,45.5);
+            dodajMeritveVitalnihZnakov(ehrId,"1990-02-14T13:00",173,42);
+            dodajMeritveVitalnihZnakov(ehrId,"1990-02-14T14:00",173,43);
+            dodajMeritveVitalnihZnakov(ehrId,"1990-02-14T15:00",174,46);
+            dodajMeritveVitalnihZnakov(ehrId,"1990-02-14T16:00",174,48);
+            dodajMeritveVitalnihZnakov(ehrId,"1990-02-14T17:00",174,50);
             
         break;
         
@@ -245,96 +289,56 @@ function generirajPodatke(stPacienta) {
         break;
     }
     
-    
-    var x = document.getElementById("preberiEhrIdZaVitalneZnake");
-    var y = document.getElementById("preberiObstojeciVitalniZnak");
-    var z = document.getElementById("preberiObstojeciEHR");
-    var q = document.getElementById("preberiPredlogoBolnika");
-    var option = document.createElement("option");
-    var option1 = document.createElement("option");
-    var option2 = document.createElement("option");
-    var option3 = document.createElement("option");
-	option.text = ime+" "+priimek;
+    option.value=ehrId;
+	option1.value=ehrId;
+	option2.value=ehrId;
+    option.text = ime+" "+priimek;
 	option1.text = ime+" "+priimek;
 	option2.text = ime+" "+priimek;
 	option3.text = ime+" "+priimek;
-	
-          //naredi nov ehr, in ga zapolni z meritvami
-    $.ajaxSetup({
-		headers: {"Ehr-Session": sessionId}
-	});
-    $.ajax({
-	    url: baseUrl + "/ehr",
-	    type: 'POST',
-	    success: function (data) {
-	        var ehrId = data.ehrId;
-	        option.value=ehrId;
-	        option1.value=ehrId;
-	        option2.value=ehrId;
-	        $("#header").html("EHR: " + ehrId);
-	
-	        // build party data
-	        var partyData = {
-	            firstNames: ime,
-	            lastNames: priimek,
-	            dateOfBirth: rojstniDan,
-	            partyAdditionalInfo: [
-	                {
-	                    key: "ehrId",
-	                    value: ehrId
-	                }
-	            ]
-	        };
-	        $.ajax({
-	            url: baseUrl + "/demographics/party",
-	            //async: false,
-	            type: 'POST',
-	            contentType: 'application/json',
-	            data: JSON.stringify(partyData),
-	            success: function(party){
-	            	//dodaj vse meritve:
-	            	
-		           	for(var i=0; i<9; i++){
-		           		var queryParams={
-							ehrId: ehrId,
-							templateId: 'Vital Signs',
-							format: 'FLAT',
-							committer: 'Tracer'
-						}
-					
-					    var compositionData = {
-						    "ctx/time": tabCas[i],
-						    "ctx/language": "en",
-						    "ctx/territory": "SI",
-						    "vital_signs/height_length/any_event/body_height_length": tabVisina[i],
-						    "vital_signs/body_weight/any_event/body_weight": tabTeza[i]
-						};
-						//dodaj
-						$.ajax({
-							url: baseUrl + "/composition?" + $.param(queryParams),
-							async: false,
-							type: 'POST',
-							contentType: 'application/json',
-							data: JSON.stringify(compositionData),
-							success: function(){
-								console.log("dodal:"+tabTeza[i])
-							}
-						});
-		           	}
-		        	
-		            x.add(option);
-		            y.add(option1);
-		            z.add(option2);
-		            q.add(option3);
-	            }
-	        });
-	    }
-	});
+    
+	x.add(option);
+	y.add(option1);
+	z.add(option2);
+	q.add(option3);
 }
 
 
-
-
+function createEHR(ime, priimek, datumRojstva) {
+    var sessionId = getSessionId();
+    $.ajaxSetup({
+        headers: {"Ehr-Session" :   sessionId}
+    });
+    var response = $.ajax({
+        url     :   baseUrl + '/ehr',
+        async   :   false,
+        type    :   'POST',
+        success :   function(data) {
+                        var ehrId = data.ehrId;
+                        var partyData = {
+                            firstNames: ime,
+                            lastNames: priimek,
+                            dateOfBirth: datumRojstva,
+                            partyAdditionalInfo: [{key: "ehrId", value: ehrId}]
+                        };
+                        $.ajax({
+                            url: baseUrl + "/demographics/party",
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify(partyData),
+                            success: function (party) {
+                                if (party.action == 'CREATE') {
+                                    console.log("Uspeh. [%s]", ehrId);
+                                }
+                            },
+                            error: function(err) {
+                                console.log("Napaka");
+                            }
+                        });
+                    }
+    });
+    return response.responseJSON.ehrId;
+}
 
 
 
@@ -346,7 +350,10 @@ function generirajPodatke(stPacienta) {
     */ 
       
 function podatkiOdZunaj(){
-    	var url = "http://apps.who.int/bmi/index.jsp?introPage=intro_3.html";
+    	
+    	//not working
+    	
+    	var url = "apps.who.int/bmi/index.jsp?introPage=intro_3.html";
     	 var sessionId = getSessionId();
     	
     	$.ajaxSetup({
@@ -354,14 +361,12 @@ function podatkiOdZunaj(){
 		});
 		
     	$.ajax({
-    		url: url,
-    		type: 'GET',
-    		dataType: "",
-    		success: function(res){
-    			console.log(res);
-    		}
-    		
-    	});
+			url:'http://www.corsproxy.com/' + 'en.wikipedia.org/wiki/Briarcliff_Manor,_New_York',
+	        type:'GET',
+	        success: function(data){
+	           console.log("success");
+	        }
+		});
 }
 
 //zapisi vrednosti iz dropdown menuja v text fielde
@@ -387,6 +392,7 @@ $(document).ready(function() {
 	});
 	
 	//podatkiOdZunaj();
+	
 	
 });
 
