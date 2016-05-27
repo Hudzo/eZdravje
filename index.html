@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+	<meta content="utf-8" http-equiv="encoding">
   <title>eZdravje :: 4. DN :: OIS 2015/2016</title>
   <link href="knjiznice/css/bootstrap.min.css" rel="stylesheet">
+  <link href="knjiznice/css/stili.css" rel="stylesheet">
   <style>
     body {padding-top: 70px;}
   </style>
   <script src="knjiznice/js/jquery-2.2.3.min.js"></script>
   <script src="knjiznice/js/bootstrap.min.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script src="knjiznice/js/koda.js"></script>
-  <script src="knjiznice/js/d3.js"></script>
 </head>
 <body>
 
@@ -87,7 +89,7 @@
 					  <span class="label label-default">Datum in ura</span><input id="dodajVitalnoDatumInUra" type="text" class="form-control input-mini" placeholder="2014-11-21T11:40Z">
 						<span class="label label-default">Telesna višina</span><div class="input-group"><input id="dodajVitalnoTelesnaVisina" type="text" class="form-control input-mini" placeholder="185"><span class="input-group-addon">cm</span></div>
 						<span class="label label-default">Telesna teža</span><div class="input-group"><input id="dodajVitalnoTelesnaTeza" type="text" class="form-control input-mini" placeholder="80.00"><span class="input-group-addon">kg</span></div>
-						<button type="button" class="btn btn-primary btn-xs" onclick="vpisiMeritve()" style="margin-top:10px">Vnos</button><span id="dodajMeritveVitalnihZnakovSporocilo"></span>
+						<button type="button" class="btn btn-primary btn-xs" onclick="vpisiMeritve(1)" style="margin-top:10px">Vnos</button><span id="dodajMeritveVitalnihZnakovSporocilo"></span>
 				  	</div>
 				</div>
 			</div>
