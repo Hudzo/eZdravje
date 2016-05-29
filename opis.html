@@ -43,10 +43,11 @@
           <div class="panel-heading">
             <h3 class="panel-title">Opis ideje, ki jo aplikacija podpira</h3>
           </div>
-          <div class="panel-body">
+          <div class="panel-body" style="text-align:left">
             <!-- ZAČETEK: Opis ideje, ki jo aplikacija podpira -->
-            <p>Zaradi vedno večjega števila ljudi s prekomerno telesno težo, sem se odločil za aplikacijo, ki spremlja BMI(body mass index) posamezne osebe</p>
-            <p><b>Glavna ideja</b> moje aplikacije je izračun in grafični prikaz BMI-ja določene osebe, le ti podatki pa se nato primerjajo z zdravstvenimi klasifikacijami, nato pa pa aplikacija obvesti osebo, v kateri razred, glede na njihov BMI, sodi.</p>
+            <p>Zaradi vedno večjega števila ljudi s prekomerno telesno težo oziroma povečno telesno težo, sem se odločil narediti aplikacijo, ki spremlja BMI(body mass index) posamezne osebe, ter prikazuje spreminjanje le tega čez čas.</p>
+            <p><b>Glavna ideja: </b>moja aplikacije naredi izračun in grafični prikaz BMI-ja določene osebe, ki pa ga lahko nato oseba primerja z razponi vrednosti BMI-ja, ki so navedene pod grafom BMI-ja osebe.</p>
+            <p>Za dodatek, pa sem s spleta pridobil še nekaj informacij o povprečnem BMI-ju nekaterih večjih držav, ter prikazal le te v grafu.</p>
             <!-- KONEC: Opis ideje, ki jo aplikacija podpira -->
           </div>
         </div>
@@ -54,9 +55,10 @@
           <div class="panel-heading">
             <h3 class="panel-title">Uporabljeni zunanji viri podatkov</h3>
           </div>
-          <div class="panel-body">
+          <div class="panel-body" style="text-align:left">
             <!-- ZAČETEK: Uporabljeni zunanji viri podatkov -->
-            <p><strong>TO-DO</strong>: Na tem mestu je navesti zunanji vir podatkov (URL naslov), na kakšen način ste ga uporabili (neposredni API klic, uvožena statična datoteka ipd.) in kaj je bil namen uporabe (kako se vključuje v osnovno idejo aplikacije).</p>
+            <p>Kot zunanji vir podatkov, sem uporabil spletno stran: <b>http://apps.who.int/gho/data/node.main.A904?lang=en</b> s katere sem prenesel podatke v obliki datoteke, ki kasneje preimenoval v <b>someData.json</b>.</p>
+            <p>Le ti preneseni podatki, pa se nanašajo na države in povprečni indeks telesne teže vsake posamezne države. V svoji aplikaciji sem te podatke uporabil za izgradnjo grafa, ki primerja povprečja BMI-jev nekaterih držav. Ta funkcionalnost služi kot vir informacij o BMI-ju po svetu.</p>
             <!-- KONEC: Uporabljeni zunanji viri podatkov -->
           </div>
         </div>
@@ -64,9 +66,9 @@
           <div class="panel-heading">
             <h3 class="panel-title">Master/detail načrtovalski vzorec</h3>
           </div>
-          <div class="panel-body">
+          <div class="panel-body" style="text-align:left">
             <!-- ZAČETEK: Master/detail načrtovalski vzorec -->
-            <p><strong>TO-DO</strong>: Na tem mestu morate navesti uporabljen master/detail načrtovalski vzorec in na kakšen način ga nameravate uporabiti.</p>
+            <p>Za master/detail načrtovalski vzorec bom uporabil seznam gumbov, ki se nanašajo na različne kategorije debelosti, glede na BMI. Ko uporabnik pritisne na katerega od teh gumbov, se pod le tem prikaže kratko sporočilo, ki poda nekaj informacij o tej kategoriji.</p>
             <!-- KONEC: Master/detail načrtovalski vzorec -->
           </div>
         </div>
@@ -74,9 +76,11 @@
           <div class="panel-heading">
             <h3 class="panel-title">Uporabljena tehnika za vizualizacijo podatkov</h3>
           </div>
-          <div class="panel-body">
+          <div class="panel-body" style="text-align:left">
             <!-- ZAČETEK: Uporabljeni zunanji viri podatkov -->
-            <p><strong>TO-DO</strong>: Na tem mestu je potrebno navesti uporabljeno tehniko vizualizacije podatkov (za pomoč lahko uporabite primer iz <a href="https://github.com/mbostock/d3/wiki/Gallery" target="_blank">D3.js galerije</a>) in zakaj je bila ta tehnika izbrana.</p>
+            <p>V svojem projektu bom uporabil 2 tehniki vizualizacije in sicer:</p>
+            <p><b>Črtni graf: </b>Ta graf je namenjen prikazu spreminjanja BMI-ja/telesne teže/telesne višine osebe čez čas. Za to vizualizacijo pa sem se odločil, ker se mi je zdel še najbolj čist in brez nepotrebnih dodatkov.</p>
+            <p><b>Stolpični graf: </b>Ta graf pa je namenjen prikazu povprečnih BMI-jev nekaterih držav, zanj sem se odločil, ker izgleda nekoliko bolj masivno.</p>
             <!-- KONEC: Uporabljeni zunanji viri podatkov -->
           </div>
         </div>

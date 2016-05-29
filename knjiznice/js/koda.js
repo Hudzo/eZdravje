@@ -329,13 +329,8 @@ function createEHR(ime, priimek, datumRojstva) {
                             contentType: 'application/json',
                             data: JSON.stringify(partyData),
                             success: function (party) {
-                                if (party.action == 'CREATE') {
-                                    console.log("Uspeh. [%s]", ehrId);
-                                }
+                                console.log("Somewhat moderate success:"+ ehrId);
                             },
-                            error: function(err) {
-                                console.log("Napaka");
-                            }
                         });
                     }
     });
