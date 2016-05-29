@@ -25,3 +25,20 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis {
+  font: 16px sans-serif;
+}
+
+.x.axis path {
+  display: none;
+}
+

@@ -181,7 +181,7 @@ function dodajMeritveVitalnihZnakov(ehrId,datumInUra,telesnaVisina,telesnaTeza,s
  */
  
 function generateStuff(){
-	//alert("Generiram podatke, prosim pocakajte nekaj sekund...");
+	alert("Generiram podatke, prosim pocakajte nekaj sekund...");
 	generirajPodatke(1);
 	generirajPodatke(2);
 	generirajPodatke(3);
@@ -573,23 +573,84 @@ function dodajOpis(stevilka){
 //pridobi podake iz someData.json
 function dodajSvetBMI(){
 	var povprecniBMI =[];
-	var drzave = ["Velika Britanija", "Nemčija", "Francija", "USA", "Kitajska", "Swaziland"];
+	var drzave = ["Velika Britanija", "Nemčija", "Francija", "USA", "Kitajska", "Samoa"];
+	var skupej=[];
 	var json=$.getJSON("someData.json", function(podata){
 		povprecniBMI[0]=podata.fact[320].Value;
 		povprecniBMI[1]=podata.fact[103].Value;
 		povprecniBMI[2]=podata.fact[452].Value;
 		povprecniBMI[3]=podata.fact[166].Value;
 		povprecniBMI[4]=podata.fact[1024].Value;
-		povprecniBMI[5]=podata.fact[703].Value;
+		povprecniBMI[5]=podata.fact[1160].Value;
 		for(var i=0; i<6;i++){
 			var tempo = povprecniBMI[i].split(" ");
-			povprecniBMI[i]=tempo[0];
+			skupej.push([drzave[i],tempo[0]]);
 		}
-		narisiSvet(drzave,povprecniBMI);
+		narisiSvet(skupej);
 	});
 }
 
-function narisiSvet(drzaveData, intData){
+function narisiSvet(vesData){
 	
+	var clientWidth = document.getElementById('dodajSvet').clientWidth;
+	var margin = {top: 20, right: 20, bottom: 50, left: 50},
+    width = clientWidth - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+	var x = d3.scale.ordinal()
+	    .rangeRoundBands([0, width], .1);
 	
+	var y = d3.scale.linear()
+	    .range([height, 0]);
+	
+	var xAxis = d3.svg.axis()
+	    .scale(x)
+	    .orient("bottom");
+	
+	var yAxis = d3.svg.axis()
+	    .scale(y)
+	    .orient("left")
+	    .ticks(10, "");
+	
+	var svg = d3.select("#dodajSvet").append("svg")
+	    .attr("width", width + margin.left + margin.right)
+	    .attr("height", height + margin.top + margin.bottom)
+	  .append("g")
+	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	
+	var data = vesData.map(function(d) {
+	      return {
+	         country: d[0],
+	         bmi: d[1]
+	      };
+	      
+	  });
+	
+	  x.domain(data.map(function(d) { return d.country; }));
+	  y.domain([0, d3.max(data, function(d) { return d.bmi; })]);
+	
+	  svg.append("g")
+	      .attr("class", "x axis")
+	      .attr("transform", "translate(0," + height + ")")
+	      .call(xAxis);
+	
+	  svg.append("g")
+	      .attr("class", "y axis")
+	      .call(yAxis)
+	    .append("text")
+	      .attr("transform", "rotate(-90)")
+	      .attr("y", 6)
+	      .attr("dy", ".71em")
+	      .style("text-anchor", "end")
+	      .text("Povprecni BMI");
+	
+	  svg.selectAll(".bar")
+	      .data(data)
+	    .enter().append("rect")
+	      .attr("class", "bar")
+	      .attr("x", function(d) { return x(d.country); })
+	      .attr("width", x.rangeBand())
+	      .attr("y", function(d) { return y(d.bmi); })
+	      .attr("height", function(d) { return height - y(d.bmi); });
+
 }
