@@ -181,7 +181,7 @@ function dodajMeritveVitalnihZnakov(ehrId,datumInUra,telesnaVisina,telesnaTeza,s
  */
  
 function generateStuff(){
-	alert("Generiram podatke, prosim pocakajte nekaj sekund...");
+	//alert("Generiram podatke, prosim pocakajte nekaj sekund...");
 	generirajPodatke(1);
 	generirajPodatke(2);
 	generirajPodatke(3);
@@ -347,30 +347,6 @@ function createEHR(ime, priimek, datumRojstva) {
 // TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
 
 
-    /*dobi podatke iz spletne strani who.com
-    BMI stanje, kaj pomeni, da si predebel...
-    */ 
-      
-function podatkiOdZunaj(){
-    	
-    	//not working
-    	
-    	var url = "apps.who.int/bmi/index.jsp?introPage=intro_3.html";
-    	 var sessionId = getSessionId();
-    	
-    	$.ajaxSetup({
-			headers: {"Ehr-Session": sessionId}
-		});
-		
-    	$.ajax({
-			url:'http://www.corsproxy.com/' + 'en.wikipedia.org/wiki/Briarcliff_Manor,_New_York',
-	        type:'GET',
-	        success: function(data){
-	           console.log("success");
-	        }
-		});
-}
-
 //zapisi vrednosti iz dropdown menuja v text fielde
 
 $(document).ready(function() {
@@ -393,11 +369,21 @@ $(document).ready(function() {
 		$('#kreirajPriimek').val(tekst[1]);
 	});
 	
-	//podatkiOdZunaj();
+	$('#nacinIzpisaMeritev').change(function() {
+		nacin=$(this).val();
+	});
+	
+	dodajSvetBMI();
 	
 	
 });
 
+
+var nacin = 0;
+/* 0-teža
+ * 1-višina
+ * 2-BMI
+*/
 
 //klik za izpis vseh vnosov dolocene osebe
 function preberiMeritveVitalnihZnakov(){
@@ -416,31 +402,76 @@ function preberiMeritveVitalnihZnakov(){
 	        console.log(party.firstNames + ' ' +party.lastNames);
 	    }
 	});
+	var novUrl=baseUrl + "/view/" + ehrId + "/weight";
+	var parameter = "Weight (kg)";
+	if(nacin==1){
+		novUrl=baseUrl + "/view/" + ehrId + "/height";
+		parameter = "Height (cm)";
+	}
+	else if(nacin == 2){
+		var novUrl2=baseUrl + "/view/" + ehrId + "/height";
+		parameter = "BMI";
+	}
 	$.ajax({
-	    url: baseUrl + "/view/" + ehrId + "/weight",
+	    url: novUrl,
 	    type: 'GET',
 	    success: function (res) {
 	        var podatki = [];
+	        
+	        if(nacin==2){
+		        var tab=[];
+		        var resource=$.ajax({
+		        	url: novUrl2,
+		    		type: 'GET',
+		    		async: false,
+		    		success: function(data){
+		    			console.log("Great success");
+		    		}
+		        });
+	    	}
+	        
+	        var dodatniIzpis="";
 	        for (var i in res) {
 	        	var cajt=res[i].time.split(".");
-	            podatki.push([cajt[0], res[i].weight]);
-	            console.log(podatki[i]);
+	            if(nacin==0){
+	            	podatki.push([cajt[0], res[i].weight]);
+	            	if(i==0){
+	            		dodatniIzpis="Vaša trenutna teža je: <b>"+res[i].weight+" kg</b>"
+	            	}
+	            }
+	            else if(nacin==1){
+	            	podatki.push([cajt[0], res[i].height]);
+	            	if(i==0){
+	            		dodatniIzpis="Vaša trenutna višina je: <b>"+res[i].height+" cm</b>"
+	            	}
+	            }
+	            else if(nacin==2){
+	            	var bmi = res[i].weight/Math.pow((resource.responseJSON[i].height/100),2);
+	            	bmi = Math.round(bmi*100)/100;
+	            	podatki.push([cajt[0], bmi]);
+	            	if(i==0){
+	            		dodatniIzpis="Vaš trenutni indeks telesne teže je: <b>"+bmi+"</b>"
+	            	}
+	            }
 	        }
-	        izrisiGraf(podatki);
+	        var kam = document.getElementById('rezultatMeritveVitalnihZnakov');
+	        kam.innerHTML = "<p></p><p><b>Izpisujem podatke...</b></p><p>"+dodatniIzpis+"</p>";
+	        izrisiGraf(podatki, parameter);
 	        
 	    }
 	});
 }
 
-function izrisiGraf(arrData){
+function izrisiGraf(arrData, meja){
 	/*
 	*1:pridobi podatke
 	*2:dodaj podatke v graf
 	*3:pripni graf v rezultatMeritveVitalnihZnakov
 	*optional - naredi se graf za visino/tezo
 	*/
-	var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
+	var clientWidth = document.getElementById('rezultatMeritveVitalnihZnakov').clientWidth;
+	var margin = {top: 20, right: 20, bottom: 65, left: 50},
+    width = clientWidth - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 	var parseDate = d3.time.format("%Y-%m-%dT%X");
@@ -477,17 +508,23 @@ function izrisiGraf(arrData){
 	      };
 	      
 	  });
-	
-	  console.log(data);
-	
+	  var yMax = d3.max(data,function(d) { return d.close; });
+	  var yMin = d3.min(data,function(d) { return d.close; }) -5;
 	
 	  x.domain(d3.extent(data, function(d) { return d.date; }));
-	  y.domain(d3.extent(data, function(d) { return d.close; }));
+	  //y.domain(d3.extent(data, function(d) { return d.close; }));
+	  y.domain([yMin, yMax]);
 	
 	  svg.append("g")
 	      .attr("class", "x axis")
 	      .attr("transform", "translate(0," + height + ")")
-	      .call(xAxis);
+	      .call(xAxis)
+	      .selectAll("text")
+		  .attr("y", 0)
+		  .attr("x", 9)
+		  .attr("dy", ".35em")
+		  .attr("transform", "rotate(90)")
+		  .style("text-anchor", "start");
 	
 	  svg.append("g")
 	      .attr("class", "y axis")
@@ -497,11 +534,62 @@ function izrisiGraf(arrData){
 	      .attr("y", 6)
 	      .attr("dy", ".71em")
 	      .style("text-anchor", "end")
-	      .text("Price ($)");
+	      .text(meja);
 	
 	  svg.append("path")
 	      .datum(data)
 	      .attr("class", "line")
 	      .attr("d", line);
 
+}
+
+
+var zastavice=[0,0,0,0,0,0,0,0];
+var stanjaBMI=["hudaPresuhost","zmernaPresuhost","blagaPresuhost","normalna","povecana","debelost1","debelost2","debelost3"];
+var text=[
+	"BMI pod mejo 16 se smatra za zelo hudo podhranjenost, kar pomeni resno življensko nevarnost",
+	"BMI med 16 in 17 pomeni zmerno podhranjenost, ki že ogroža življenje",
+	"BMI med 17 in 18 pomeni blago podhranjenost in se nahaja na meji ogrožanja lastnega življenja",
+	"BMI med 18.5 in 25 se smatra za normalni indeks telesne teže",
+	"BMI med 25 in 30 že pomeni nekoliko povečano telesno težo",
+	"BMI med 30 in 40 je klasificiran, kot debelost prve stopnje",
+	"BMI med 40 in 45 spada v kategorijo debelosti druge stopnje in ogoroža življenje osebe",
+	"BMI nad mejo 45 pomeni prekomerno debelost in resno ogroža življenje osebe"
+	];
+function dodajOpis(stevilka){
+	if(zastavice[stevilka-1]==0){
+		zastavice[stevilka-1] = 1;
+		var doctore = document.getElementById(stanjaBMI[stevilka-1]);
+		doctore.innerHTML=text[stevilka-1];
+	}
+	else{
+		zastavice[stevilka-1] = 0;
+		var doctore = document.getElementById(stanjaBMI[stevilka-1]);
+		doctore.innerHTML="";
+	}
+	
+}
+
+//pridobi podake iz someData.json
+function dodajSvetBMI(){
+	var povprecniBMI =[];
+	var drzave = ["Velika Britanija", "Nemčija", "Francija", "USA", "Kitajska", "Swaziland"];
+	var json=$.getJSON("someData.json", function(podata){
+		povprecniBMI[0]=podata.fact[320].Value;
+		povprecniBMI[1]=podata.fact[103].Value;
+		povprecniBMI[2]=podata.fact[452].Value;
+		povprecniBMI[3]=podata.fact[166].Value;
+		povprecniBMI[4]=podata.fact[1024].Value;
+		povprecniBMI[5]=podata.fact[703].Value;
+		for(var i=0; i<6;i++){
+			var tempo = povprecniBMI[i].split(" ");
+			povprecniBMI[i]=tempo[0];
+		}
+		narisiSvet(drzave,povprecniBMI);
+	});
+}
+
+function narisiSvet(drzaveData, intData){
+	
+	
 }

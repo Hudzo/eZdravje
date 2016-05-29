@@ -98,8 +98,9 @@
 				<div class="panel panel-default">
 					<div class="panel-heading" style="background-color:#2c2c2c">
 						<div class="row" style="color:#959595">
-							<div class="col-lg-8 col-md-8 col-sm-8"><b>Pregled</b></div>
-							<div class="col-lg-4 col-md-4 col-sm-4"><select class="form-control input-sm" id="preberiEhrIdZaVitalneZnake"><option value=""></option></select></div>
+							<div class="col-lg-6 col-md-6 col-sm-6"><b>Pregled</b></div>
+							<div class="col-lg-3 col-md-3 col-sm-3"><select class="form-control input-sm" id="preberiEhrIdZaVitalneZnake"><option value=""></option></select></div>
+							<div class="col-lg-3 col-md-3 col-sm-3"><select class="form-control input-sm" id="nacinIzpisaMeritev"><option value=0>Teža</option><option value=1>Višina</option><option value=2>BMI (Body Mass Index)</option></select></div>
 						</div>
 					</div>
 					<div class="panel-body">
@@ -111,6 +112,52 @@
 			</div>
 			
 		</div>
+		
+		<div class="row">
+			<div class="col-lg-13 col-md-13 col-sm-13">
+					<div class="panel panel-default">
+						<div class="panel-heading" style="background-color:#2c2c2c">
+							<div class="row" style="color:#959595">
+								<div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center;"><b>Razlaga rezultata BMI:</b></div>
+							</div>
+						</div>
+						<div class="panel-body" style="background-color:#777">
+							
+							<button type="button" class="btn btn-primary btn-block" onclick="dodajOpis(1)" >BMI <= 16</button><span id="opisBMIrezultata1"></span>
+							<div id="hudaPresuhost" class="razredek"></div>
+							<button type="button" class="btn btn-primary btn-block" onclick="dodajOpis(2)" >16 < BMI <= 17</button><span id="opisBMIrezultata2"></span>
+							<div id="zmernaPresuhost" class="razredek"></div>
+							<button type="button" class="btn btn-primary btn-block" onclick="dodajOpis(3)" >17 < BMI <= 18.5 </button><span id="opisBMIrezultata3"></span>
+							<div id="blagaPresuhost" class="razredek"></div>
+							<button type="button" class="btn btn-primary btn-block" onclick="dodajOpis(4)" >18.5 < BMI <= 25</button><span id="opisBMIrezultata4"></span>
+							<div id="normalna" class="razredek"></div>
+							<button type="button" class="btn btn-primary btn-block" onclick="dodajOpis(5)" >25 < BMI <= 30</button><span id="opisBMIrezultata6"></span>
+							<div id="povecana" class="razredek"></div>
+							<button type="button" class="btn btn-primary btn-block" onclick="dodajOpis(6)" >30 < BMI <= 40</button><span id="opisBMIrezultata7"></span>
+							<div id="debelost1" class="razredek"></div>
+							<button type="button" class="btn btn-primary btn-block" onclick="dodajOpis(7)" >40 < BMI <= 45</button><span id="opisBMIrezultata8"></span>
+							<div id="debelost2" class="razredek"></div>
+							<button type="button" class="btn btn-primary btn-block" onclick="dodajOpis(8)" >45 < BMI</button><span id="opisBMIrezultata9"></span>
+							<div id="debelost3" class="razredek"></div>
+							
+					  </div>
+					</div>
+				</div>
+				<div class="col-lg-13 col-md-13 col-sm-13">
+					<div class="panel panel-default">
+						<div class="panel-heading" style="background-color:#2c2c2c">
+							<div class="row" style="color:#959595">
+								<div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center;"><b>Povprečen BMI po (nekaterih) državah:</b></div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div id="dodajSvet"></div>
+					  </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 		
   </div>
   <!-- KONEC: Vsebina aplikacije -->
